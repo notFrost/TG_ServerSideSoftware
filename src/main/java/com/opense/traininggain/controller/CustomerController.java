@@ -4,6 +4,10 @@ import com.opense.traininggain.domain.model.Customer;
 import com.opense.traininggain.domain.service.CustomerService;
 import com.opense.traininggain.resource.CustomerResource;
 import com.opense.traininggain.resource.SaveCustomerResource;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +29,10 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    @Operation(summary = "Get Customers", description = "Get All Customers by Pages", tags = {"customer"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All Customers returned", content = @Content(mediaType = "application/json"))
+    })
     @GetMapping("/customers")
     public Page<CustomerResource> getAllCustomers(Pageable pageable) {
         Page<Customer> customersPage = customerService.getAllCustomers(pageable);
@@ -36,21 +44,21 @@ public class CustomerController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-
+    @Operation(summary = "Create Customer", description = "Create a new Customer", tags = {"customer"})
     @PostMapping("/customers")
     public CustomerResource createCustomer(@Valid @RequestBody SaveCustomerResource resource) {
         Customer customer = convertToEntity(resource);
         return convertToResource(customerService.createCustomer(customer));
     }
 
-
+    @Operation(summary = "Update Customer", description = "Update Customer for given Id", tags = {"customer"})
     @PutMapping("/customers/{cCustomer}")
     public CustomerResource updateCustomer(@PathVariable Long cCustomer, @RequestBody SaveCustomerResource resource) {
         Customer customer = convertToEntity(resource);
         return convertToResource(customerService.updateCustomer(cCustomer, customer));
     }
 
-
+    @Operation(summary = "Delete Customer", description = "Delete Customer with given Id", tags = {"customer"})
     @DeleteMapping("/customers/{cCustomer}")
     public ResponseEntity<?> deletePost(@PathVariable Long cCustomer) {
         return customerService.deleteCustomer(cCustomer);

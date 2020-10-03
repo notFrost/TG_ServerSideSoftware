@@ -31,12 +31,13 @@ public class SpecialistController {
     @Autowired
     private SpecialistService specialistService;
 
+
+    @Operation(summary = "Get Specialists", description = "Get All Customers by Pages", tags = {"specialists"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All Specialists returned", content = @Content(mediaType = "application/json"))
     })
-
     @GetMapping("/specialists")
-    public Page<SpecialistResource> getAllPosts(Pageable pageable) {
+    public Page<SpecialistResource> getAllSpecialist(Pageable pageable) {
         Page<Specialist> specialistPage = specialistService.getAllSpecialists(pageable);
         List<SpecialistResource> resources = specialistPage.getContent()
                 .stream()
@@ -46,23 +47,23 @@ public class SpecialistController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-
+    @Operation(summary = "Create Specialist", description = "Create a new Specialist", tags = {"specialists"})
     @PostMapping("/specialists")
-    public SpecialistResource createPost(@Valid @RequestBody SaveSpecialistResource resource) {
+    public SpecialistResource createSpecialist(@Valid @RequestBody SaveSpecialistResource resource) {
         Specialist specialist = convertToEntity(resource);
         return convertToResource(specialistService.createSpecialist(specialist));
     }
 
-
+    @Operation(summary = "Update Specialist", description = "Update Specialist for given Id", tags = {"specialists"})
     @PutMapping("/specialist/{cSpecialist}")
-    public SpecialistResource updatePost(@PathVariable Long cSpecialist, @RequestBody SaveSpecialistResource resource) {
+    public SpecialistResource updateSpecialist(@PathVariable Long cSpecialist, @RequestBody SaveSpecialistResource resource) {
         Specialist specialist = convertToEntity(resource);
         return convertToResource(specialistService.updateSpecialist(cSpecialist, specialist));
     }
 
-
+    @Operation(summary = "Delete Specialist", description = "Delete Specialist with given Id", tags = {"specialists"})
     @DeleteMapping("/specialist/{cSpecialist}")
-    public ResponseEntity<?> deletePost(@PathVariable Long cSpecialist) {
+    public ResponseEntity<?> deleteSpecialist(@PathVariable Long cSpecialist) {
         return specialistService.deleteSpecialist(cSpecialist);
     }
 
