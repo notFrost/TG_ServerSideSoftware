@@ -6,15 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 public interface SpecialistService {
-    /*
     Page<Specialist> getAllSpecialists(Pageable pageable);
     Specialist getSpecialistById(Long cSpecialist);
-    Post createPost(Specialist specialist);
-    Post updatePost(Long postId, Post postRequest);
+    Specialist createPost(Specialist specialist);
+    Specialist updatePost(Long postId, Specialist specialist);
     ResponseEntity<?> deletePost(Long postId);
-    Post assignPostTag(Long postId, Long tagId);
-    Post unassignPostTag(Long postId, Long tagId);
-    Page<Post> getAllPostsByTagId(Long tagId, Pageable pageable);
-    Post getPostByTitle(String title);
-    */
 }
