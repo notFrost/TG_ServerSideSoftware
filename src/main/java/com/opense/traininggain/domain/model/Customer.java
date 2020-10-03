@@ -28,13 +28,9 @@ public class Customer extends AuditModel{
     @NotNull
     private Long nPhone;
 
-  /*  @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "cCity",nullable = false)
-    @JsonIgnore
-    private City cCity;
-*/
 
     @NotNull
+    @Column(unique = true)
     @Size(max = 40)
     private String tEmail;
 
@@ -42,7 +38,13 @@ public class Customer extends AuditModel{
     @Size(max = 40)
     private String tAddress;
 
-    public Customer(Long cCustomer, @NotNull @Size(max = 25) String nCustomer, @NotNull Date nBirthDate, @NotNull Boolean fMale, @NotNull Long nPhone, @NotNull String tEmail, @NotNull String tAddress) {
+
+
+    public Customer() {
+
+    }
+
+    public Customer(Long cCustomer, @NotNull @Size(max = 25) String nCustomer, @NotNull Date nBirthDate, @NotNull Boolean fMale, @NotNull Long nPhone, @NotNull @Size(max = 40) String tEmail, @NotNull @Size(max = 40) String tAddress) {
         this.cCustomer = cCustomer;
         this.nCustomer = nCustomer;
         this.nBirthDate = nBirthDate;
@@ -50,10 +52,6 @@ public class Customer extends AuditModel{
         this.nPhone = nPhone;
         this.tEmail = tEmail;
         this.tAddress = tAddress;
-    }
-
-    public Customer() {
-
     }
 
 

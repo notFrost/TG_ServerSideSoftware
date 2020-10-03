@@ -6,9 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 public interface CustomerService {
-    Page<Customer> getAllPosts(Pageable pageable);
-    Customer getPostById(Long cCustomer);
-    Customer createPost(Customer customer);
-    Customer updatePost(Long cCustomer, Customer customer);
-    ResponseEntity<?> deletePost(Long cCustomer);
+    Page<Customer> getAllCustomers(Pageable pageable);
+    Customer getCustomerById(Long cCustomer);
+    Customer createCustomer(Customer customer);
+    Customer updateCustomer(Long cCustomer, Customer customerDetails);
+    ResponseEntity<?> deleteCustomer(Long cCustomer);
 }
