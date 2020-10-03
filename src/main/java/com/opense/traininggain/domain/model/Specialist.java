@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(name="specialists")
+@Table(name = "specialists")
 public class Specialist extends AuditModel{
 
     @Id
