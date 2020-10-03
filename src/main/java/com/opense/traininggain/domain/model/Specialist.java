@@ -1,5 +1,7 @@
 package com.opense.traininggain.domain.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,13 +19,17 @@ public class Specialist extends AuditModel{
     @Size(max=25)
     private String nSpecialist;
 
-//    @NotNull
-//    @private Long cCity;
+/*
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "cCity", nullable = false)
+    private City cCity_FK;
+*/
 
     @NotNull
     private Boolean fMale;
 
     @NotNull
+    @DateTimeFormat(style = "dd/mm/yyyy")
     private Date dBirthdate;
 
     @NotNull
@@ -50,6 +56,10 @@ public class Specialist extends AuditModel{
         this.nPhone = nPhone;
         this.tEmail = tEmail;
         this.tDescription = tDescription;
+    }
+
+    public Specialist() {
+
     }
 
     public Long getcSpecialist() {
