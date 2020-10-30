@@ -29,7 +29,7 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @Operation(summary = "Get Customers", description = "Get All Customers by Pages", tags = {"customer"})
+    @Operation(summary = "Get Customers", description = "Get All Customers by Pages", tags = {"Customers"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All Customers returned", content = @Content(mediaType = "application/json"))
     })
@@ -44,24 +44,26 @@ public class CustomerController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @Operation(summary = "Create Customer", description = "Create a new Customer", tags = {"customer"})
-    @PostMapping("/customers")
-    public CustomerResource createCustomer(@Valid @RequestBody SaveCustomerResource resource) {
+    @Operation(summary = "Create Customer", description = "Create a new Customer", tags = {"Customers"})
+    @PostMapping("/users/{usersId}/customer")
+    public CustomerResource createCustomer(
+            @PathVariable Long usersId,
+            @Valid @RequestBody SaveCustomerResource resource) {
         Customer customer = convertToEntity(resource);
-        return convertToResource(customerService.createCustomer(customer));
+        return convertToResource(customerService.createCustomer(usersId,customer));
     }
 
-    @Operation(summary = "Update Customer", description = "Update Customer for given Id", tags = {"customer"})
-    @PutMapping("/customers/{cCustomer}")
-    public CustomerResource updateCustomer(@PathVariable Long cCustomer, @RequestBody SaveCustomerResource resource) {
+    @Operation(summary = "Update Customer", description = "Update Customer for given Id", tags = {"Customers"})
+    @PutMapping("/customers/{customerId}")
+    public CustomerResource updateCustomer(@PathVariable Long customerId, @RequestBody SaveCustomerResource resource) {
         Customer customer = convertToEntity(resource);
-        return convertToResource(customerService.updateCustomer(cCustomer, customer));
+        return convertToResource(customerService.updateCustomer(customerId, customer));
     }
 
-    @Operation(summary = "Delete Customer", description = "Delete Customer with given Id", tags = {"customer"})
-    @DeleteMapping("/customers/{cCustomer}")
-    public ResponseEntity<?> deletePost(@PathVariable Long cCustomer) {
-        return customerService.deleteCustomer(cCustomer);
+    @Operation(summary = "Delete Customer", description = "Delete Customer with given Id", tags = {"Customers"})
+    @DeleteMapping("/customers/{customerId}")
+    public ResponseEntity<?> deletePost(@PathVariable Long customerId) {
+        return customerService.deleteCustomer(customerId);
     }
 
     private Customer convertToEntity(SaveCustomerResource resource) {

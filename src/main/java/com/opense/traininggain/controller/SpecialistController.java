@@ -32,7 +32,7 @@ public class SpecialistController {
     private SpecialistService specialistService;
 
 
-    @Operation(summary = "Get Specialists", description = "Get All Customers by Pages", tags = {"specialists"})
+    @Operation(summary = "Get Specialists", description = "Get All Customers by Pages", tags = {"Specialists"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All Specialists returned", content = @Content(mediaType = "application/json"))
     })
@@ -47,24 +47,24 @@ public class SpecialistController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @Operation(summary = "Create Specialist", description = "Create a new Specialist", tags = {"specialists"})
-    @PostMapping("/specialists")
-    public SpecialistResource createSpecialist(@Valid @RequestBody SaveSpecialistResource resource) {
+    @Operation(summary = "Create Specialist", description = "Create a new Specialist", tags = {"Specialists"})
+    @PostMapping("/users/{userId}/specialist")
+    public SpecialistResource createSpecialist(@PathVariable Long userId,@Valid @RequestBody SaveSpecialistResource resource) {
         Specialist specialist = convertToEntity(resource);
-        return convertToResource(specialistService.createSpecialist(specialist));
+        return convertToResource(specialistService.createSpecialist(userId,specialist));
     }
 
-    @Operation(summary = "Update Specialist", description = "Update Specialist for given Id", tags = {"specialists"})
-    @PutMapping("/specialist/{cSpecialist}")
-    public SpecialistResource updateSpecialist(@PathVariable Long cSpecialist, @RequestBody SaveSpecialistResource resource) {
+    @Operation(summary = "Update Specialist", description = "Update Specialist for given Id", tags = {"Specialists"})
+    @PutMapping("/specialist/{specialistId}")
+    public SpecialistResource updateSpecialist(@PathVariable Long specialistId, @RequestBody SaveSpecialistResource resource) {
         Specialist specialist = convertToEntity(resource);
-        return convertToResource(specialistService.updateSpecialist(cSpecialist, specialist));
+        return convertToResource(specialistService.updateSpecialist(specialistId, specialist));
     }
 
-    @Operation(summary = "Delete Specialist", description = "Delete Specialist with given Id", tags = {"specialists"})
-    @DeleteMapping("/specialist/{cSpecialist}")
-    public ResponseEntity<?> deleteSpecialist(@PathVariable Long cSpecialist) {
-        return specialistService.deleteSpecialist(cSpecialist);
+    @Operation(summary = "Delete Specialist", description = "Delete Specialist with given Id", tags = {"Specialists"})
+    @DeleteMapping("/specialist/{specialistId}")
+    public ResponseEntity<?> deleteSpecialist(@PathVariable Long specialistId) {
+        return specialistService.deleteSpecialist(specialistId);
     }
 
 

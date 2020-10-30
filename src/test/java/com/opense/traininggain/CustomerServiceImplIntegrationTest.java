@@ -41,7 +41,7 @@ public class CustomerServiceImplIntegrationTest {
         //Arrange
         long id =1;
         Customer customer= new Customer();
-        customer.setcCustomer(id);
+        customer.setId(id);
         //given(postRepository.findByTitle(post.getTitle()))
         //        .willReturn(Optional.of(post));
         when(customerRepository.findById(id))
@@ -50,7 +50,7 @@ public class CustomerServiceImplIntegrationTest {
 
         Customer foundcustomer=customerService.getCustomerById(id);
         //Assert
-        assertThat(foundcustomer.getcCustomer()).isEqualTo(id);
+        assertThat(foundcustomer.getId()).isEqualTo(id);
     }
     @Test
     @DisplayName("when getCustomerById With Invalid Id Then Returns ResourceNotFoundException")

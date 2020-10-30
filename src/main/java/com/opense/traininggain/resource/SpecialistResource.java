@@ -2,86 +2,33 @@ package com.opense.traininggain.resource;
 
 import java.util.Date;
 import com.opense.traininggain.domain.model.AuditModel;
+import com.opense.traininggain.domain.model.User;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class SpecialistResource extends AuditModel {
 
-    private Long cSpecialist;
+    private Long id;
+    private String specialty;
 
-    private String nSpecialist;
 
-    private Date nBirthdate;
-
-    private Boolean fMale;
-
-    private Long nPhone;
-
-    private String tEmail;
-
-    private String tAddress;
-
-    private String tDescription;
-
-    public Long getcSpecialist() {
-        return cSpecialist;
+    public Long getId() {
+        return id;
     }
 
-    public void setcSpecialist(Long cSpecialist) {
-        this.cSpecialist = cSpecialist;
+    public SpecialistResource setId(Long id) {
+        this.id = id;
+        return this;
     }
 
-    public String getnSpecialist() {
-        return nSpecialist;
+    public String getSpecialty() {
+        return specialty;
     }
 
-    public void setnSpecialist(String nSpecialist) {
-        this.nSpecialist = nSpecialist;
-    }
-
-    public Date getnBirthdate() {
-        return nBirthdate;
-    }
-
-    public void setnBirthdate(Date nBirthdate) {
-        this.nBirthdate = nBirthdate;
-    }
-
-    public Boolean getfMale() {
-        return fMale;
-    }
-
-    public void setfMale(Boolean fMale) {
-        this.fMale = fMale;
-    }
-
-    public Long getnPhone() {
-        return nPhone;
-    }
-
-    public void setnPhone(Long nPhone) {
-        this.nPhone = nPhone;
-    }
-
-    public String gettEmail() {
-        return tEmail;
-    }
-
-    public void settEmail(String tEmail) {
-        this.tEmail = tEmail;
-    }
-
-    public String gettAddress() {
-        return tAddress;
-    }
-
-    public void settAddress(String tAddress) {
-        this.tAddress = tAddress;
-    }
-
-    public String gettDescription() {
-        return tDescription;
-    }
-
-    public void settDescription(String tDescription) {
-        this.tDescription = tDescription;
+    public SpecialistResource setSpecialty(String specialty) {
+        this.specialty = specialty;
+        return this;
     }
 }

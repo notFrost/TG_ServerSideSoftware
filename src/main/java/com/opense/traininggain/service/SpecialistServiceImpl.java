@@ -2,6 +2,7 @@ package com.opense.traininggain.service;
 
 import com.opense.traininggain.domain.model.Specialist;
 import com.opense.traininggain.domain.repository.SpecialistRepository;
+import com.opense.traininggain.domain.repository.UserRepository;
 import com.opense.traininggain.domain.service.SpecialistService;
 import com.opense.traininggain.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SpecialistServiceImpl implements SpecialistService {
-
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private SpecialistRepository specialistRepository;
 
@@ -22,33 +24,32 @@ public class SpecialistServiceImpl implements SpecialistService {
     }
 
     @Override
-    public Specialist getSpecialistById(Long cSpecialist) {
-        return specialistRepository.findById(cSpecialist).orElseThrow(()->new ResourceNotFoundException("Specialist", "Id", cSpecialist));
+    public Specialist getSpecialistById(Long specialistId) {
+        return specialistRepository.findById(specialistId).orElseThrow(()->new ResourceNotFoundException("Specialist", "Id", specialistId));
+    }
+    @Override
+    public Specialist createSpecialist(Long userId,Specialist specialist) {
+        return userRepository.findById(userId).map(user -> {
+            specialist.setUser(user);
+            return specialistRepository.save(specialist);
+        }).orElseThrow(()->new ResourceNotFoundException(
+                "User","Id",userId));
+
+
     }
 
     @Override
-    public Specialist createSpecialist(Specialist specialist) {
+    public Specialist updateSpecialist(Long specialistId, Specialist specialistDetails) {
+        Specialist specialist = specialistRepository.findById(specialistId)
+                .orElseThrow(() -> new ResourceNotFoundException("Specialist", "Id", specialistId));
+        specialist.setSpecialty(specialistDetails.getSpecialty());
         return specialistRepository.save(specialist);
     }
 
     @Override
-    public Specialist updateSpecialist(Long cSpecialist, Specialist specialistDetails) {
-        Specialist specialist = specialistRepository.findById(cSpecialist)
-                .orElseThrow(() -> new ResourceNotFoundException("Specilaist", "Id", cSpecialist));
-        specialist.setnSpecialist(specialistDetails.getnSpecialist());
-        specialist.setdBirthdate(specialistDetails.getdBirthdate());
-        specialist.setfMale(specialistDetails.getfMale());
-        specialist.setnPhone(specialistDetails.getnPhone());
-        specialist.settEmail(specialistDetails.gettEmail());
-        specialist.settAddress(specialistDetails.gettAddress());
-        specialist.settDescription(specialistDetails.gettDescription());
-        return specialistRepository.save(specialist);
-    }
-
-    @Override
-    public ResponseEntity<?> deleteSpecialist(Long cSpecialist) {
-        Specialist specialist = specialistRepository.findById(cSpecialist).
-                orElseThrow(()-> new ResourceNotFoundException("Specialist", "Id", cSpecialist));
+    public ResponseEntity<?> deleteSpecialist(Long specialistId) {
+        Specialist specialist = specialistRepository.findById(specialistId).
+                orElseThrow(()-> new ResourceNotFoundException("Specialist", "Id", specialistId));
         specialistRepository.delete(specialist);
         return ResponseEntity.ok().build();
     }

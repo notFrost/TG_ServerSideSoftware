@@ -1,78 +1,33 @@
 package com.opense.traininggain.resource;
 
 import com.opense.traininggain.domain.model.AuditModel;
+import com.opense.traininggain.domain.model.User;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class CustomerResource extends AuditModel {
 
-    private Long cCustomer;
+    private Long id;
+    private String description;
 
-    private String nCustomer;
-
-    private Date nBirthDate;
-
-    private Boolean fMale;
-
-    private Long nPhone;
-
-    private String tEmail;
-
-    private String tAddress;
-
-    public Long getcCustomer() {
-        return cCustomer;
+    public Long getId() {
+        return id;
     }
 
-    public void setcCustomer(Long cCustomer) {
-        this.cCustomer = cCustomer;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getnCustomer() {
-        return nCustomer;
+    public String getDescription() {
+        return description;
     }
 
-    public void setnCustomer(String nCustomer) {
-        this.nCustomer = nCustomer;
+    public CustomerResource setDescription(String description) {
+        this.description = description;
+        return this;
     }
 
-    public Date getnBirthDate() {
-        return nBirthDate;
-    }
-
-    public void setnBirthDate(Date nBirthDate) {
-        this.nBirthDate = nBirthDate;
-    }
-
-    public Boolean getfMale() {
-        return fMale;
-    }
-
-    public void setfMale(Boolean fMale) {
-        this.fMale = fMale;
-    }
-
-    public Long getnPhone() {
-        return nPhone;
-    }
-
-    public void setnPhone(Long nPhone) {
-        this.nPhone = nPhone;
-    }
-
-    public String gettEmail() {
-        return tEmail;
-    }
-
-    public void settEmail(String tEmail) {
-        this.tEmail = tEmail;
-    }
-
-    public String gettAddress() {
-        return tAddress;
-    }
-
-    public void settAddress(String tAddress) {
-        this.tAddress = tAddress;
-    }
 }

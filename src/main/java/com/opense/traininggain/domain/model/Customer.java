@@ -12,102 +12,38 @@ import java.util.Date;
 public class Customer extends AuditModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cCustomer;
+    private Long id;
 
     @NotNull
-    @Size(max=25)
-    private String nCustomer;
+    @Size(max = 30)
+    private String description;
 
-    @NotNull
-    @DateTimeFormat(style = "dd/MM/yyyy")
-    private Date nBirthDate;
-
-    @NotNull
-    private Boolean fMale;
-
-    @NotNull
-    private Long nPhone;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id",nullable = false)
+    private User user;
 
 
-    @NotNull
-    @Column(unique = true)
-    @Size(max = 40)
-    private String tEmail;
-
-    @NotNull
-    @Size(max = 40)
-    private String tAddress;
-
-
-
-    public Customer() {
-
+    public Long getId() {
+        return id;
     }
 
-    public Customer(Long cCustomer, @NotNull @Size(max = 25) String nCustomer, @NotNull Date nBirthDate, @NotNull Boolean fMale, @NotNull Long nPhone, @NotNull @Size(max = 40) String tEmail, @NotNull @Size(max = 40) String tAddress) {
-        this.cCustomer = cCustomer;
-        this.nCustomer = nCustomer;
-        this.nBirthDate = nBirthDate;
-        this.fMale = fMale;
-        this.nPhone = nPhone;
-        this.tEmail = tEmail;
-        this.tAddress = tAddress;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-
-    public Long getcCustomer() {
-        return cCustomer;
+    public String getDescription() {
+        return description;
     }
 
-    public void setcCustomer(Long cCustomer) {
-        this.cCustomer = cCustomer;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getnCustomer() {
-        return nCustomer;
+    public User getUser() {
+        return user;
     }
 
-    public void setnCustomer(String nCustomer) {
-        this.nCustomer = nCustomer;
-    }
-
-    public Date getnBirthDate() {
-        return nBirthDate;
-    }
-
-    public void setnBirthDate(Date nBirthDate) {
-        this.nBirthDate = nBirthDate;
-    }
-
-    public Boolean getfMale() {
-        return fMale;
-    }
-
-    public void setfMale(Boolean fMale) {
-        this.fMale = fMale;
-    }
-
-    public Long getnPhone() {
-        return nPhone;
-    }
-
-    public void setnPhone(Long nPhone) {
-        this.nPhone = nPhone;
-    }
-
-    public String gettEmail() {
-        return tEmail;
-    }
-
-    public void settEmail(String tEmail) {
-        this.tEmail = tEmail;
-    }
-
-    public String gettAddress() {
-        return tAddress;
-    }
-
-    public void settAddress(String tAddress) {
-        this.tAddress = tAddress;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -2,6 +2,7 @@ package com.opense.traininggain.service;
 
 import com.opense.traininggain.domain.model.Customer;
 import com.opense.traininggain.domain.repository.CustomerRepository;
+import com.opense.traininggain.domain.repository.UserRepository;
 import com.opense.traininggain.domain.service.CustomerService;
 import com.opense.traininggain.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private CustomerRepository customerRepository;
 
     @Override
@@ -21,32 +24,34 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomerById(Long cCustomer) {
-        return customerRepository.findById(cCustomer).orElseThrow(()->new ResourceNotFoundException("Customer","Id",cCustomer));
+    public Customer getCustomerById(Long customerId) {
+        return customerRepository.findById(customerId).orElseThrow(()->new ResourceNotFoundException("Customer","Id",customerId));
     }
 
     @Override
-    public Customer createCustomer(Customer customer) {
+    public Customer createCustomer(Long userId,Customer customer) {
+
+        return userRepository.findById(userId).map(user -> {
+            customer.setUser(user);
+            return customerRepository.save(customer);
+        }).orElseThrow(()->new ResourceNotFoundException(
+                "User","Id",userId));
+
+
+    }
+
+    @Override
+    public Customer updateCustomer(Long customerId, Customer customerDetails) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(()-> new ResourceNotFoundException("Customer", "Id", customerId));
+        customer.setDescription(customerDetails.getDescription());
         return customerRepository.save(customer);
     }
 
     @Override
-    public Customer updateCustomer(Long cCustomer, Customer customerDetails) {
-        return customerRepository.findById(cCustomer).map(customer -> {
-            customer.setnCustomer(customerDetails.getnCustomer());
-            customer.setnBirthDate(customerDetails.getnBirthDate());
-            customer.setfMale(customerDetails.getfMale());
-            customer.setnPhone(customerDetails.getnPhone());
-            customer.settEmail(customerDetails.gettEmail());
-            customer.settEmail(customerDetails.gettEmail());
-            return customerRepository.save(customer);
-        }).orElseThrow(() -> new ResourceNotFoundException("Customer", "Id", cCustomer));
-    }
-
-    @Override
-    public ResponseEntity<?> deleteCustomer(Long cCustomer) {
-        Customer customer = customerRepository.findById(cCustomer)
-                .orElseThrow(()-> new ResourceNotFoundException("Customer", "Id", cCustomer));
+    public ResponseEntity<?> deleteCustomer(Long customerId) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(()-> new ResourceNotFoundException("Customer", "Id", customerId));
         customerRepository.delete(customer);
         return ResponseEntity.ok().build();
     }

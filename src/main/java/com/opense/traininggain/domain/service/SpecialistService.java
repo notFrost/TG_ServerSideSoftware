@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 
 public interface SpecialistService {
     Page<Specialist> getAllSpecialists(Pageable pageable);
-    Specialist getSpecialistById(Long cSpecialist);
-    Specialist createSpecialist(Specialist specialist);
-    Specialist updateSpecialist(Long cSpecialist, Specialist specialistDetails);
-    ResponseEntity<?> deleteSpecialist(Long cSpecialist);
+    Specialist getSpecialistById(Long specialistId);
+    Specialist createSpecialist(Long userId,Specialist specialist);
+    Specialist updateSpecialist(Long specialistId, Specialist specialistDetails);
+    ResponseEntity<?> deleteSpecialist(Long specialistId);
 }
