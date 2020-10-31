@@ -1,8 +1,7 @@
 package com.opense.traininggain;
 
-import com.opense.traininggain.domain.model.Customer;
+
 import com.opense.traininggain.domain.model.User;
-import com.opense.traininggain.domain.repository.CustomerRepository;
 import com.opense.traininggain.domain.repository.UserRepository;
 import com.opense.traininggain.domain.service.CustomerService;
 import com.opense.traininggain.domain.service.UserService;
@@ -22,73 +21,68 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
-public class CustomerServiceImplIntegrationTest {
-    @MockBean
-    private CustomerRepository customerRepository;
 
-
+public class UserServiceImplIntegrationTest {
     @MockBean
     private UserRepository userRepository;
-
-    @Autowired
-    private CustomerService customerService;
 
     @Autowired
     private UserService userService;
 
     @TestConfiguration
-    static class CustomerServiceImplTestConfiguration{
+    static class UserServiceImplTestConfiguration {
+        @Bean
+        public UserService userService() {
+            return new UserServiceImpl();
+        }
 
-        @Bean
-        public CustomerService customerService(){return new CustomerServiceImpl(); }
-        @Bean
-        public UserService userService(){return new UserServiceImpl();}
+
+
+
+    }
+@Test
+@DisplayName("when GetUserById With Valid Id Then Returns User")
+    public void whenGetUserByIdWithValidIdThenReturnsUser() {
+
+    //Arrange
+    long id =1;
+    User user= new User();
+    user.setId(id);
+    //given(postRepository.findByTitle(post.getTitle()))
+    //    .willReturn(Optional.of(post));
+    when(userRepository.findById(id))
+            .thenReturn(Optional.of(user));
+    //Act
+
+    User foundUser = userService.getUserById(id);
+    //Assert
+    assertThat(foundUser.getId()).isEqualTo(id);
     }
 
-
     @Test
-    @DisplayName("when GetCustomerById With Valid Id Then Returns Customer")
-    public void whenGetCustomerByIdWithValidIdThenReturnsException(){
-        //Arrange
-        long id =1;
-        Customer customer= new Customer();
-        customer.setId(id);
-
-
-        //given(postRepository.findByTitle(post.getTitle()))
-        //        .willReturn(Optional.of(post));
-        when(customerRepository.findById(id))
-                .thenReturn(Optional.of(customer));
-        //Act
-
-        Customer foundcustomer=customerService.getCustomerById(id);
-        //Assert
-        assertThat(foundcustomer.getId()).isEqualTo(id);
-    }
-    @Test
-    @DisplayName("when GetCustomerById With Invalid Id Then Returns ResourceNotFoundException")
-    public void whenGetCustomerByIdWithInvalidIdThenReturnsResourceNotFoundException(){
-
+    @DisplayName("when GetUserById With Invalid Id Then Returns Resource Not Found Exception")
+    public void whenGetUserByIdWithInvalidIdThenReturnsResourceNotFoundException() {
 
         //Arrange
         long id =2;
         String template = "Resource %s not found for %s with value %s";
-        Customer customer= new Customer();
-        when(customerRepository.findById(id))
+        User user= new User();
+        when(userRepository.findById(id))
                 .thenReturn(Optional.empty());
-        String expectedMessage = String.format(template, "Customer", "Id", id);
+        String expectedMessage = String.format(template, "User", "Id", id);
 
         // Act
         Throwable exception = catchThrowable(() -> {
-            Customer foundCustomer = customerService.getCustomerById(id);
+            User foundUser = userService.getUserById(id);
         });
         // Assert
         assertThat(exception)
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage(expectedMessage);
+
     }
+
 }
