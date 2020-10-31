@@ -1,9 +1,13 @@
 package com.opense.traininggain.domain.repository;
 
 import com.opense.traininggain.domain.model.Customer;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+import java.util.Optional;
+
+
 public interface CustomerRepository extends JpaRepository<Customer,Long> {
+
 }

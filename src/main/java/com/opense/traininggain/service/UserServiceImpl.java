@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) {
-        return userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User","Id",userId));
+        return userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User","Id", userId));
     }
 
     @Override
@@ -58,4 +58,6 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.ok().build();
 
     }
+
+
 }

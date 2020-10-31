@@ -48,6 +48,8 @@
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
+
+
             </exclusions>
         </dependency>
         <dependency>
@@ -71,6 +73,9 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.4.7</version>
         </dependency>
+
+
+
     </dependencies>
 
     <build>
