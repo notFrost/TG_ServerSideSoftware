@@ -45,6 +45,9 @@ public class CustomerController {
     }
 
     @Operation(summary = "Create Customer", description = "Create a new Customer", tags = {"Customers"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User Created", content = @Content(mediaType = "application/json"))
+    })
     @PostMapping("/users/{usersId}/customer")
     public CustomerResource createCustomer(
             @PathVariable Long usersId,
@@ -54,6 +57,9 @@ public class CustomerController {
     }
 
     @Operation(summary = "Update Customer", description = "Update Customer for given Id", tags = {"Customers"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Customer Updated", content = @Content(mediaType = "application/json"))
+    })
     @PutMapping("/customers/{customerId}")
     public CustomerResource updateCustomer(@PathVariable Long customerId, @RequestBody SaveCustomerResource resource) {
         Customer customer = convertToEntity(resource);
@@ -61,6 +67,9 @@ public class CustomerController {
     }
 
     @Operation(summary = "Delete Customer", description = "Delete Customer with given Id", tags = {"Customers"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Customer Deleted", content = @Content(mediaType = "application/json"))
+    })
     @DeleteMapping("/customers/{customerId}")
     public ResponseEntity<?> deletePost(@PathVariable Long customerId) {
         return customerService.deleteCustomer(customerId);

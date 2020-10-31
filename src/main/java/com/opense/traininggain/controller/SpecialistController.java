@@ -48,6 +48,9 @@ public class SpecialistController {
     }
 
     @Operation(summary = "Create Specialist", description = "Create a new Specialist", tags = {"Specialists"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Specialist created", content = @Content(mediaType = "application/json"))
+    })
     @PostMapping("/users/{userId}/specialist")
     public SpecialistResource createSpecialist(@PathVariable Long userId,@Valid @RequestBody SaveSpecialistResource resource) {
         Specialist specialist = convertToEntity(resource);
@@ -55,14 +58,20 @@ public class SpecialistController {
     }
 
     @Operation(summary = "Update Specialist", description = "Update Specialist for given Id", tags = {"Specialists"})
-    @PutMapping("/specialist/{specialistId}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Specialist updated", content = @Content(mediaType = "application/json"))
+    })
+    @PutMapping("/specialists/{specialistId}")
     public SpecialistResource updateSpecialist(@PathVariable Long specialistId, @RequestBody SaveSpecialistResource resource) {
         Specialist specialist = convertToEntity(resource);
         return convertToResource(specialistService.updateSpecialist(specialistId, specialist));
     }
 
     @Operation(summary = "Delete Specialist", description = "Delete Specialist with given Id", tags = {"Specialists"})
-    @DeleteMapping("/specialist/{specialistId}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Specialist deleted", content = @Content(mediaType = "application/json"))
+    })
+    @DeleteMapping("/specialists/{specialistId}")
     public ResponseEntity<?> deleteSpecialist(@PathVariable Long specialistId) {
         return specialistService.deleteSpecialist(specialistId);
     }

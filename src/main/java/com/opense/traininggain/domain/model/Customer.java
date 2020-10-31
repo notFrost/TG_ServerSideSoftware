@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="customers")
@@ -22,6 +23,21 @@ public class Customer extends AuditModel{
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
+
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "subscriptions",
+            joinColumns = { @JoinColumn(name = "customer_id")},
+            inverseJoinColumns = { @JoinColumn(name = "subscription_plan_id")})
+    private List<SubscriptionPlan> subscriptionPlans;
+
+    public Customer() {
+    }
+
+    public Customer(@NotNull @Size(max = 30) String description) {
+        this.description = description;
+    }
 
     public Long getId() {
         return id;
@@ -46,4 +62,32 @@ public class Customer extends AuditModel{
     public void setUser(User user) {
         this.user = user;
     }
+
+
+
+    public boolean isSubscribeWith(SubscriptionPlan subscriptionPlan) {
+        return this.getSubscriptionPlans().contains(subscriptionPlan);
+    }
+
+    public Customer SubscribeWith(SubscriptionPlan subscriptionPlan) {
+        if(!this.isSubscribeWith(subscriptionPlan))
+            this.getSubscriptionPlans().add(subscriptionPlan);
+        return this;
+    }
+
+    public Customer UnsubscribeWith(SubscriptionPlan SubscriptionPlan) {
+        if(this.isSubscribeWith(SubscriptionPlan))
+            this.getSubscriptionPlans().remove(SubscriptionPlan);
+        return this;
+    }
+
+    public List<SubscriptionPlan> getSubscriptionPlans() {
+        return subscriptionPlans;
+    }
+
+    public Customer setSubscriptionPlans(List<SubscriptionPlan> subscriptionPlans) {
+        this.subscriptionPlans = subscriptionPlans;
+        return this;
+    }
+
 }

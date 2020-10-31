@@ -1,15 +1,20 @@
 package com.opense.traininggain.service;
 
 import com.opense.traininggain.domain.model.Customer;
+import com.opense.traininggain.domain.model.SubscriptionPlan;
 import com.opense.traininggain.domain.repository.CustomerRepository;
+import com.opense.traininggain.domain.repository.SubscriptionPlanRepository;
 import com.opense.traininggain.domain.repository.UserRepository;
 import com.opense.traininggain.domain.service.CustomerService;
 import com.opense.traininggain.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -17,6 +22,8 @@ public class CustomerServiceImpl implements CustomerService {
     private UserRepository userRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private SubscriptionPlanRepository subscriptionPlanRepository;
 
     @Override
     public Page<Customer> getAllCustomers(Pageable pageable) {
@@ -54,5 +61,38 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(()-> new ResourceNotFoundException("Customer", "Id", customerId));
         customerRepository.delete(customer);
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public Customer assignSubscription(Long customerId, Long subscriptionPlanId) {
+        SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findById(subscriptionPlanId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "SubscriptionPlan", "Id", subscriptionPlanId));
+        return customerRepository.findById(customerId).map(
+                customer -> customerRepository.save(customer.SubscribeWith(subscriptionPlan)))
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Customer", "Id", customerId));
+    }
+
+    @Override
+    public Customer unassignSubscription(Long customerId, Long subscriptionPlanId) {
+        SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findById(subscriptionPlanId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "SubscriptionPlan", "Id", subscriptionPlanId));
+        return customerRepository.findById(customerId).map(
+                customer -> customerRepository.save(customer.UnsubscribeWith(subscriptionPlan)))
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Customer", "Id", customerId));
+    }
+
+    @Override
+    public Page<Customer> getAllCustomersBySubscriptionPlanIdId(Long subscriptionPlanIdId, Pageable pageable) {
+        return subscriptionPlanRepository.findById(subscriptionPlanIdId).map(subscriptionPlan -> {
+                    List<Customer> customers = subscriptionPlan.getCustomers();
+                    int customersCount = customers.size();
+                    return new PageImpl<>(customers, pageable, customersCount);
+                }
+        ).orElseThrow(() -> new ResourceNotFoundException(
+                "SubscriptionPlan", "Id", subscriptionPlanIdId));
     }
 }
