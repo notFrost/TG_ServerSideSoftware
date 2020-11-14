@@ -1,5 +1,6 @@
 package com.opense.traininggain.domain.service;
 
+import com.opense.traininggain.domain.model.Customer;
 import com.opense.traininggain.domain.model.Session;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,4 +14,9 @@ public interface SessionService {
     Session updateSession(Long specialistId, Long sessionId, Session sessionDetails);
     ResponseEntity<?> deleteSession(Long specialistId, Long sessionId);
     Session getSessionsByTitle(String title);
+    Session assingEquipament(Long sessionId, Long equipamentId);
+    Session unassignEquipament(Long sessionId, Long equipamentId);
+    Session assignTagSession(Long sessionId, Long tagId);
+    Page<Session> getAllSessionsByTagId(Long tagId, Pageable pageable);
+
 }

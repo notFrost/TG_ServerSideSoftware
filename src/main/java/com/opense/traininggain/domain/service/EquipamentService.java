@@ -1,5 +1,6 @@
 package com.opense.traininggain.domain.service;
 
+import com.opense.traininggain.domain.model.Customer;
 import com.opense.traininggain.domain.model.Equipament;
 import com.opense.traininggain.domain.model.Session;
 import com.opense.traininggain.domain.model.User;
@@ -13,5 +14,6 @@ public interface EquipamentService {
     Equipament createEquipament(Equipament equipament);
     Equipament updateEquipament(Long equipamentId, Equipament equipamentDetails);
     ResponseEntity<?> deleteEquipament(Long equipamentId);
+    Page<Equipament> getAllEquipamentsBySessionId(Long sessionId, Pageable pageable);
 
 }
