@@ -3,6 +3,7 @@ package com.opense.traininggain.domain.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "tags")
@@ -19,6 +20,11 @@ public class Tag extends AuditModel{
     @NotNull
     @Size(max = 100)
     private String description;
+
+
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},mappedBy="tags")
+    private List<Session> sessions;
 
     public Tag() {
     }
@@ -52,6 +58,14 @@ public class Tag extends AuditModel{
 
     public Tag setDescription(String description) {
         this.description = description;
+        return this;
+    }
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    public Tag setSessions(List<Session> sessions) {
+        this.sessions = sessions;
         return this;
     }
 }

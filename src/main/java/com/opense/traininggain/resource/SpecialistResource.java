@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 public class SpecialistResource extends AuditModel {
 
     private Long id;
+    private String name;
     private String specialty;
 
 
@@ -31,4 +32,13 @@ public class SpecialistResource extends AuditModel {
         this.specialty = specialty;
         return this;
     }
+    public String getName() {
+        return name;
+    }
+
+    public SpecialistResource setName(String name) {
+        this.name = name;
+        return this;
+    }
+
 }

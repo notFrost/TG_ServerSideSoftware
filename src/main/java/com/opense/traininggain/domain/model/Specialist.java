@@ -23,8 +23,11 @@ public class Specialist extends AuditModel{
     private User user;
 
 
+
+
     @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},mappedBy="specialists")
     private List<Customer> customers;
+
 
     public Long getId() {
         return id;
@@ -58,6 +61,7 @@ public class Specialist extends AuditModel{
         this.customers = customers;
         return this;
     }
+
 }
 
 

@@ -49,6 +49,20 @@ public class Session extends AuditModel {
     private Specialist specialist;
 
 
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "equipament_sessions",
+            joinColumns = { @JoinColumn(name = "session_id")},
+            inverseJoinColumns = { @JoinColumn(name = "equipament_id")})
+    private List<Equipament> equipaments;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "tag_sessions",
+            joinColumns = { @JoinColumn(name = "session_id")},
+            inverseJoinColumns = { @JoinColumn(name = "tag_id")})
+    private List<Tag> tags;
+
     @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},mappedBy="sessions")
     private List<Customer> customers;
 
@@ -123,4 +137,50 @@ public class Session extends AuditModel {
         this.customers = customers;
         return this;
     }
+
+
+    public List<Equipament> getEquipaments() {
+        return equipaments;
+    }
+
+    public Session setEquipaments(List<Equipament> equipaments) {
+        this.equipaments = equipaments;
+        return this;
+    }
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public Session setTags(List<Tag> tags) {
+        this.tags = tags;
+        return this;
+    }
+
+
+    public boolean EquipamentWith(Equipament equipament) {
+        return this.getEquipaments().contains(equipament);
+    }
+
+    public Session AssignWith(Equipament equipament) {
+        if(!this.EquipamentWith(equipament))
+            this.getEquipaments().add(equipament);
+        return this;
+    }
+
+    public Session UnassignWith(Equipament equipament) {
+        if(this.EquipamentWith(equipament))
+            this.getEquipaments().remove(equipament);
+        return this;
+    }
+
+    public boolean isTaggedWith(Tag tag) {
+        return this.getTags().contains(tag);
+    }
+
+    public Session tagWith(Tag tag) {
+        if(!this.isTaggedWith(tag))
+            this.getTags().add(tag);
+        return this;
+    }
+
 }
