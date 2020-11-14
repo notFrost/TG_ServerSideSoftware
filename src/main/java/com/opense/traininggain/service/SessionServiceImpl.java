@@ -4,6 +4,7 @@ import com.opense.traininggain.domain.model.Session;
 import com.opense.traininggain.domain.model.Specialist;
 import com.opense.traininggain.domain.repository.SessionRepository;
 import com.opense.traininggain.domain.repository.SpecialistRepository;
+import com.opense.traininggain.domain.repository.UserRepository;
 import com.opense.traininggain.domain.service.SessionService;
 import com.opense.traininggain.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,16 @@ import org.springframework.stereotype.Service;
 public class SessionServiceImpl implements SessionService {
 
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private SpecialistRepository specialistRepository;
     @Autowired
     private SessionRepository sessionRepository;
+
+    @Override
+    public Page<Session> getAllSessions(Pageable pageable) {
+        return sessionRepository.findAll(pageable);
+    }
 
     @Override
     public Page<Session> getAllSessionsBySpecialistId(Long specialistId, Pageable pageable) {
@@ -49,7 +57,7 @@ public class SessionServiceImpl implements SessionService {
         if(!specialistRepository.existsById(specialistId))
             throw new ResourceNotFoundException("Specialist","Id",specialistId);
         return sessionRepository.findById(sessionId).map(session -> {
-            session.setTittle(sessionDetails.getTittle());
+            session.setTitle(sessionDetails.getTitle());
             session.setDescription(sessionDetails.getDescription());
             session.setStartDate(sessionDetails.getStartDate());
             session.setStartHour(sessionDetails.getStartHour());
@@ -69,4 +77,11 @@ public class SessionServiceImpl implements SessionService {
         }).orElseThrow(() -> new ResourceNotFoundException("Session", "Id", sessionId));
 
     }
+
+    @Override
+    public Session getSessionsByTitle(String title) {
+        return sessionRepository.findByTitle(title).orElseThrow(()->new ResourceNotFoundException("Session","Title",title));
+    }
+
+
 }

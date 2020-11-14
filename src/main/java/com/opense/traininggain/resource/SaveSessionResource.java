@@ -10,7 +10,8 @@ import java.util.Date;
 public class SaveSessionResource {
     @NotNull
     @Size(max = 30)
-    private String tittle;
+    private String title;
+
     @NotNull
     @Size(max = 50)
     private Date startDate;
@@ -36,12 +37,12 @@ public class SaveSessionResource {
         return this;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
-    public SaveSessionResource setTittle(String tittle) {
-        this.tittle = tittle;
+    public SaveSessionResource setTitle(String title) {
+        this.title = title;
         return this;
     }
 
@@ -53,6 +54,7 @@ public class SaveSessionResource {
         this.startDate = startDate;
         return this;
     }
+
     public Date getStartHour() {
         return startHour;
     }
@@ -70,5 +72,7 @@ public class SaveSessionResource {
         this.endHour = endHour;
         return this;
     }
+
+
 
 }
