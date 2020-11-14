@@ -1,6 +1,8 @@
 package com.opense.traininggain.resource;
 
 import com.opense.traininggain.domain.model.AuditModel;
+import com.opense.traininggain.domain.model.Session;
+import com.opense.traininggain.domain.model.User;
 
 
 import javax.persistence.Column;
@@ -10,10 +12,13 @@ import java.util.Date;
 
 public class SessionResource extends AuditModel {
     private Long id;
-    private String tittle;
+    private String title;
     private Date startDate;
     private String description;
 
+
+
+    private String name;
 
     private Date startHour;
     private Date endHour;
@@ -38,12 +43,12 @@ public class SessionResource extends AuditModel {
         return this;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
-    public SessionResource setTittle(String tittle) {
-        this.tittle = tittle;
+    public SessionResource setTitle(String title) {
+        this.title = title;
         return this;
     }
 
@@ -72,5 +77,7 @@ public class SessionResource extends AuditModel {
         this.endHour = endHour;
         return this;
     }
+
+
 
 }

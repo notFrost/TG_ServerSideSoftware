@@ -21,7 +21,7 @@ public class Session extends AuditModel {
 
     @NotNull
     @Size(max=30)
-    private String tittle;
+    private String title;
 
     @NotNull
     @Size(max=50)
@@ -61,12 +61,12 @@ public class Session extends AuditModel {
         return this;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
-    public Session setTittle(String tittle) {
-        this.tittle = tittle;
+    public Session setTitle(String title) {
+        this.title = title;
         return this;
     }
 

@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface SessionRepository extends JpaRepository<Session,Long> {
     Page<Session> findBySpecialistId(Long SpecialistId, Pageable pageable);
     Optional<Session> findByIdAndSpecialistId(Long id, Long SpecialistId);
+    Optional<Session> findByTitle(String title);
 }

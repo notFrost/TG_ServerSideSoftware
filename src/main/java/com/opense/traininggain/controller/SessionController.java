@@ -41,6 +41,20 @@ public class SessionController {
                 this::convertToResource).collect(Collectors.toList());
         return new PageImpl<>(resources, pageable, resources.size());
     }
+    @Operation(tags = {"Sessions"})
+    @GetMapping("/sessions")
+    public Page<SessionResource> getAllSessions(Pageable pageable) {
+        Page<Session> sessionPage = sessionService.getAllSessions(pageable);
+        List<SessionResource> resources = sessionPage.getContent().stream().map(
+                this::convertToResource).collect(Collectors.toList());
+        return new PageImpl<>(resources, pageable, resources.size());
+    }
+    @Operation(tags = {"Sessions"})
+    @GetMapping("/sessions/{title}")
+    public SessionResource getAllSessions(@PathVariable (value = "title") String title) {
+        return convertToResource(sessionService.getSessionsByTitle(title));
+    }
+
 
     @Operation(summary = "Get Session by Id and specialistId", description = "Get a Session by Id and specialistId", tags = {"Sessions"})
     @ApiResponses(value = {
@@ -67,7 +81,7 @@ public class SessionController {
             @ApiResponse(responseCode = "200", description = "Updated Session", content = @Content(mediaType = "application/json"))
     })
     @PutMapping("/specialists/{specialistId}/sessions/{sessionId}")
-    public SessionResource updateComment(
+    public SessionResource updateSession(
             @PathVariable(value = "specialistId") Long specialistId,
             @PathVariable(value = "sessionId") Long sessionId,
             @Valid @RequestBody SaveSessionResource resource) {
@@ -78,7 +92,7 @@ public class SessionController {
             @ApiResponse(responseCode = "200", description = "Deleted Session", content = @Content(mediaType = "application/json"))
     })
     @DeleteMapping("/specialists/{specialistId}/sessions/{sessionId}")
-    public ResponseEntity<?> deleteComment(
+    public ResponseEntity<?> deleteSession(
             @PathVariable (value = "specialistId") Long specialistId,
             @PathVariable (value = "sessionId") Long sessionId) {
         return sessionService.deleteSession(specialistId, sessionId);
