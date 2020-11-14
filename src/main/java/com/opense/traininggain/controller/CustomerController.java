@@ -71,7 +71,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "200", description = "Customer Deleted", content = @Content(mediaType = "application/json"))
     })
     @DeleteMapping("/customers/{customerId}")
-    public ResponseEntity<?> deletePost(@PathVariable Long customerId) {
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long customerId) {
         return customerService.deleteCustomer(customerId);
     }
 
