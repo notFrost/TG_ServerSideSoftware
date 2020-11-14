@@ -12,6 +12,8 @@ public interface CustomerService {
     Customer updateCustomer(Long customerId, Customer customerDetails);
     ResponseEntity<?> deleteCustomer(Long customerId);
     Customer assignSubscription(Long customerId, Long subscriptionPlanId);
+    Customer assignReview(Long customerId,Long SpecialistId);
     Customer unassignSubscription(Long customerId, Long subscriptionPlanId);
     Page<Customer> getAllCustomersBySubscriptionPlanIdId(Long subscriptionPlanIdId, Pageable pageable);
+    Page<Customer> getAllCustomersBySpecialistId(Long SpecialistId, Pageable pageable);
 }

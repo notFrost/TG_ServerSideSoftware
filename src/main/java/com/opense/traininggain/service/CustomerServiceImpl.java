@@ -1,8 +1,10 @@
 package com.opense.traininggain.service;
 
 import com.opense.traininggain.domain.model.Customer;
+import com.opense.traininggain.domain.model.Specialist;
 import com.opense.traininggain.domain.model.SubscriptionPlan;
 import com.opense.traininggain.domain.repository.CustomerRepository;
+import com.opense.traininggain.domain.repository.SpecialistRepository;
 import com.opense.traininggain.domain.repository.SubscriptionPlanRepository;
 import com.opense.traininggain.domain.repository.UserRepository;
 import com.opense.traininggain.domain.service.CustomerService;
@@ -24,6 +26,8 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
     @Autowired
     private SubscriptionPlanRepository subscriptionPlanRepository;
+    @Autowired
+    private SpecialistRepository specialistRepository;
 
     @Override
     public Page<Customer> getAllCustomers(Pageable pageable) {
@@ -75,6 +79,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Customer assignReview(Long customerId, Long SpecialistId) {
+        Specialist specialist=specialistRepository.findById(SpecialistId).orElseThrow(()->new ResourceNotFoundException(
+                "Specialist","Id",SpecialistId));
+        return customerRepository.findById(customerId).map(
+                customer -> customerRepository.save(customer.ReviewedWith(specialist)))
+                .orElseThrow(()->new ResourceNotFoundException(
+                        "Customer","Id",customerId));
+    }
+
+    @Override
     public Customer unassignSubscription(Long customerId, Long subscriptionPlanId) {
         SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findById(subscriptionPlanId)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -94,5 +108,16 @@ public class CustomerServiceImpl implements CustomerService {
                 }
         ).orElseThrow(() -> new ResourceNotFoundException(
                 "SubscriptionPlan", "Id", subscriptionPlanIdId));
+    }
+
+    @Override
+    public Page<Customer> getAllCustomersBySpecialistId(Long SpecialistId , Pageable pageable) {
+        return specialistRepository.findById(SpecialistId).map(specialist -> {
+                    List<Customer> customers = specialist.getCustomers();
+                    int customersCount = customers.size();
+                    return new PageImpl<>(customers, pageable, customersCount);
+                }
+        ).orElseThrow(() -> new ResourceNotFoundException(
+                "Specialist", "Id", SpecialistId));
     }
 }
