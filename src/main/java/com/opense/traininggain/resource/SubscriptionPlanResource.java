@@ -2,9 +2,15 @@ package com.opense.traininggain.resource;
 
 import com.opense.traininggain.domain.model.AuditModel;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 public class SubscriptionPlanResource extends AuditModel {
     private Long id;
+
+    private String name;
+
     private String description;
     private int cost;
 
@@ -30,6 +36,16 @@ public class SubscriptionPlanResource extends AuditModel {
         return cost;
 
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public SubscriptionPlanResource setName(String name) {
+        this.name = name;
+        return this;
+    }
+
 
     public SubscriptionPlanResource setCost(int cost) {
         this.cost = cost;

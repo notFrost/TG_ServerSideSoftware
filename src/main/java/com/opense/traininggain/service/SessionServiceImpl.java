@@ -52,6 +52,8 @@ public class SessionServiceImpl implements SessionService {
             session.setTittle(sessionDetails.getTittle());
             session.setDescription(sessionDetails.getDescription());
             session.setStartDate(sessionDetails.getStartDate());
+            session.setStartHour(sessionDetails.getStartHour());
+            session.setEndHour(sessionDetails.getEndHour());
             return sessionRepository.save(session);
         }).orElseThrow(()->new ResourceNotFoundException("Session","Id",sessionId));
     }

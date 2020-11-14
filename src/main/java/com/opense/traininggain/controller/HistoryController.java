@@ -4,7 +4,6 @@ import com.opense.traininggain.domain.model.Customer;
 import com.opense.traininggain.domain.service.CustomerService;
 import com.opense.traininggain.resource.CustomerResource;
 import com.opense.traininggain.resource.SaveCustomerResource;
-import io.swagger.v3.oas.annotations.Operation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,32 +15,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class SubscriptionsController {
+@RequestMapping("/api")
+public class HistoryController {
     @Autowired
     private ModelMapper mapper;
     @Autowired
     private CustomerService customerService;
 
-    @PostMapping("/customers/{customerId}/plans/{subscriptionPlanId}")
-    public CustomerResource assignSubscribe(
+    @PostMapping("/customers/{customerId}/sessions/{sessionId}")
+    public CustomerResource assignReview(
             @PathVariable(name = "customerId") Long customerId,
-            @PathVariable(name = "subscriptionPlanId") Long subscriptionPlanId) {
-        return convertToResource(customerService.assignSubscription(customerId, subscriptionPlanId));
+            @PathVariable(name = "sessionId") Long sessionId) {
+        return convertToResource(customerService.assingHistory(customerId, sessionId));
     }
 
-    @DeleteMapping("/customers/{customerId}/plans/{subscriptionPlanId}")
-    public CustomerResource unAssignSubscribe(
-            @PathVariable(name = "customerId") Long customerId,
-            @PathVariable(name = "subscriptionPlanId") Long subscriptionPlanId) {
-        return convertToResource(customerService.unassignSubscription(customerId, subscriptionPlanId));
-    }
 
-    @GetMapping("plans/{subscriptionPlanId}/customers")
-    public Page<CustomerResource> getAllCustomersBySubscriptionPlanId(
-            @PathVariable(name = "subscriptionPlanId") Long subscriptionPlanId,
+    @GetMapping("/sessions/{sessionId}/customers")
+    public Page<CustomerResource> getAllCustomersBySessionId(
+            @PathVariable(name = "sessionId") Long sessionId,
             Pageable pageable) {
-        Page<Customer> postsPage = customerService.getAllCustomersBySpecialistId(subscriptionPlanId, pageable);
-        List<CustomerResource> resources = postsPage.getContent().stream()
+        Page<Customer> customersPage = customerService.getAllCustomersBySessionId(sessionId, pageable);
+        List<CustomerResource> resources = customersPage.getContent().stream()
                 .map(this::convertToResource).collect(Collectors.toList());
         return new PageImpl<>(resources, pageable, resources.size());
     }
@@ -53,4 +47,5 @@ public class SubscriptionsController {
     private CustomerResource convertToResource(Customer entity) {
         return mapper.map(entity, CustomerResource.class);
     }
+
 }

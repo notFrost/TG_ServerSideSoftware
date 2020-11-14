@@ -9,6 +9,12 @@ import javax.validation.constraints.Size;
 
 public class SaveSubscriptionPlanResource {
 
+
+    @NotNull
+    @NotBlank
+    @Size(max = 25)
+    private String name;
+
     @NotNull
     @NotBlank
     @Size(max = 50)
@@ -24,6 +30,15 @@ public class SaveSubscriptionPlanResource {
 
     public SaveSubscriptionPlanResource setDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SaveSubscriptionPlanResource setName(String name) {
+        this.name = name;
         return this;
     }
 

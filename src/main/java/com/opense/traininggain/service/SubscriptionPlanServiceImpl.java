@@ -52,6 +52,7 @@ public class SubscriptionPlanServiceImpl implements SubscriptionPlanService {
     @Override
     public SubscriptionPlan updateSubscriptionPlans(Long subscriptionPlanId, SubscriptionPlan subscriptionPlanDetails) {
         return subscriptionPlanRepository.findById(subscriptionPlanId).map(subscriptionPlan -> {
+            subscriptionPlan.setName(subscriptionPlanDetails.getName());
             subscriptionPlan.setDescription(subscriptionPlanDetails.getDescription());
             subscriptionPlan.setCost(subscriptionPlanDetails.getCost());
             return subscriptionPlanRepository.save(subscriptionPlan);
