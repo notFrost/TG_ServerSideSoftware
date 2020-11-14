@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="sessions")
@@ -31,11 +32,25 @@ public class Session extends AuditModel {
     @Column(name = "start_date")
     private Date startDate;
 
+
+    @NotNull
+    @Size(max = 5)
+    @Column(name = "start_hour")
+    private Date startHour;
+
+    @NotNull
+    @Size(max = 5)
+    @Column(name = "end_hour")
+    private Date endHour;
+
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "specialist_id",nullable = false)
     @JsonIgnore
     private Specialist specialist;
 
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},mappedBy="sessions")
+    private List<Customer> customers;
 
     public Long getId() {
         return id;
@@ -82,4 +97,30 @@ public class Session extends AuditModel {
         return this;
     }
 
+    public Date getStartHour() {
+        return startHour;
+    }
+
+    public Session setStartHour(Date startHour) {
+        this.startHour = startHour;
+        return this;
+    }
+
+    public Date getEndHour() {
+        return endHour;
+    }
+
+    public Session setEndHour(Date endHour) {
+        this.endHour = endHour;
+        return this;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public Session setCustomers(List<Customer> customers) {
+        this.customers = customers;
+        return this;
+    }
 }

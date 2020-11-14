@@ -1,12 +1,10 @@
 package com.opense.traininggain.service;
 
 import com.opense.traininggain.domain.model.Customer;
+import com.opense.traininggain.domain.model.Session;
 import com.opense.traininggain.domain.model.Specialist;
 import com.opense.traininggain.domain.model.SubscriptionPlan;
-import com.opense.traininggain.domain.repository.CustomerRepository;
-import com.opense.traininggain.domain.repository.SpecialistRepository;
-import com.opense.traininggain.domain.repository.SubscriptionPlanRepository;
-import com.opense.traininggain.domain.repository.UserRepository;
+import com.opense.traininggain.domain.repository.*;
 import com.opense.traininggain.domain.service.CustomerService;
 import com.opense.traininggain.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,8 @@ public class CustomerServiceImpl implements CustomerService {
     private SubscriptionPlanRepository subscriptionPlanRepository;
     @Autowired
     private SpecialistRepository specialistRepository;
+    @Autowired
+    private SessionRepository sessionRepository;
 
     @Override
     public Page<Customer> getAllCustomers(Pageable pageable) {
@@ -89,6 +89,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Customer assingHistory(Long customerId, Long sessionId) {
+        Session session=sessionRepository.findById(sessionId).orElseThrow(()->new ResourceNotFoundException(
+                "Session","Id",sessionId));
+        return customerRepository.findById(customerId).map(
+                customer -> customerRepository.save(customer.RecordedWith(session)))
+                .orElseThrow(()->new ResourceNotFoundException(
+                        "Customer","Id",customerId));
+    }
+
+    @Override
     public Customer unassignSubscription(Long customerId, Long subscriptionPlanId) {
         SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findById(subscriptionPlanId)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -100,17 +110,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Page<Customer> getAllCustomersBySubscriptionPlanIdId(Long subscriptionPlanIdId, Pageable pageable) {
-        return subscriptionPlanRepository.findById(subscriptionPlanIdId).map(subscriptionPlan -> {
-                    List<Customer> customers = subscriptionPlan.getCustomers();
-                    int customersCount = customers.size();
-                    return new PageImpl<>(customers, pageable, customersCount);
-                }
-        ).orElseThrow(() -> new ResourceNotFoundException(
-                "SubscriptionPlan", "Id", subscriptionPlanIdId));
-    }
-
-    @Override
     public Page<Customer> getAllCustomersBySpecialistId(Long SpecialistId , Pageable pageable) {
         return specialistRepository.findById(SpecialistId).map(specialist -> {
                     List<Customer> customers = specialist.getCustomers();
@@ -119,5 +118,16 @@ public class CustomerServiceImpl implements CustomerService {
                 }
         ).orElseThrow(() -> new ResourceNotFoundException(
                 "Specialist", "Id", SpecialistId));
+    }
+
+    @Override
+    public Page<Customer> getAllCustomersBySessionId(Long sessionId, Pageable pageable) {
+        return sessionRepository.findById(sessionId).map(session -> {
+                    List<Customer> customers = session.getCustomers();
+                    int customersCount = customers.size();
+                    return new PageImpl<>(customers, pageable, customersCount);
+                }
+        ).orElseThrow(() -> new ResourceNotFoundException(
+                "Session", "Id", sessionId));
     }
 }

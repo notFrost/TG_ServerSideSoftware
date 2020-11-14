@@ -13,7 +13,8 @@ public interface CustomerService {
     ResponseEntity<?> deleteCustomer(Long customerId);
     Customer assignSubscription(Long customerId, Long subscriptionPlanId);
     Customer assignReview(Long customerId,Long SpecialistId);
+    Customer assingHistory(Long customerId,Long sessionId);
     Customer unassignSubscription(Long customerId, Long subscriptionPlanId);
-    Page<Customer> getAllCustomersBySubscriptionPlanIdId(Long subscriptionPlanIdId, Pageable pageable);
     Page<Customer> getAllCustomersBySpecialistId(Long SpecialistId, Pageable pageable);
+    Page<Customer> getAllCustomersBySessionId(Long sessionId, Pageable pageable);
 }

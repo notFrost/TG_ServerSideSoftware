@@ -12,6 +12,11 @@ public class SubscriptionPlan extends AuditModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @NotNull
+    @Size(max = 25)
+    private String name;
+
     @NotNull
     @Size(max = 50)
     private String description;
@@ -25,7 +30,8 @@ public class SubscriptionPlan extends AuditModel {
     public SubscriptionPlan() {
     }
 
-    public SubscriptionPlan(@NotNull @Size(max = 50) String description, @NotNull int cost) {
+    public SubscriptionPlan(@NotNull @Size(max = 25) String name,@NotNull @Size(max = 50) String description, @NotNull int cost) {
+        this.name=name;
         this.description = description;
         this.cost = cost;
     }
@@ -63,4 +69,14 @@ public class SubscriptionPlan extends AuditModel {
         this.customers = customers;
         return this;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public SubscriptionPlan setName(String name) {
+        this.name = name;
+        return this;
+    }
+
 }
