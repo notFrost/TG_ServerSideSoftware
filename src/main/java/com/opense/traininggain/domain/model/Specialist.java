@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "specialists")
@@ -21,6 +22,9 @@ public class Specialist extends AuditModel{
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},mappedBy="specialists")
+    private List<Customer> customers;
 
     public Long getId() {
         return id;
@@ -44,6 +48,15 @@ public class Specialist extends AuditModel{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public Specialist setCustomers(List<Customer> customers) {
+        this.customers = customers;
+        return this;
     }
 }
 

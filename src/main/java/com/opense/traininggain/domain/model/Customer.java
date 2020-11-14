@@ -27,6 +27,13 @@ public class Customer extends AuditModel{
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "reviews",
+            joinColumns = { @JoinColumn(name = "customer_id")},
+            inverseJoinColumns = { @JoinColumn(name = "specialist_id")})
+    private List<Specialist> specialists;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "subscriptions",
             joinColumns = { @JoinColumn(name = "customer_id")},
             inverseJoinColumns = { @JoinColumn(name = "subscription_plan_id")})
@@ -63,7 +70,24 @@ public class Customer extends AuditModel{
         this.user = user;
     }
 
+    public List<Specialist> getSpecialists() {
+        return specialists;
+    }
 
+    public Customer setSpecialists(List<Specialist> specialists) {
+        this.specialists = specialists;
+        return this;
+    }
+
+    public boolean isReviewedWith(Specialist specialist){
+        return this.getSpecialists().contains(specialist);
+    }
+    public Customer ReviewedWith(Specialist specialist){
+        if (!this.isReviewedWith(specialist))
+            this.getSpecialists().add(specialist);
+        return this;
+
+    }
 
     public boolean isSubscribeWith(SubscriptionPlan subscriptionPlan) {
         return this.getSubscriptionPlans().contains(subscriptionPlan);
