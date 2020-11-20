@@ -6,16 +6,13 @@ import java.util.Date;
 
 public class UserResource extends AuditModel {
     private Long id;
-    private String name;
-    private String lastname;
-    private Date birth;
-    private String address;
+    private String firstName;
+    private String lastName;
+    private Date birthDate;
     private Long phone;
-    private int age;
     private String email;
     private String gender;
     private String password;
-    private String country;
 
 
     public Long getId() {
@@ -27,41 +24,33 @@ public class UserResource extends AuditModel {
         return this;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public UserResource setName(String name) {
-        this.name = name;
+    public UserResource setFirstName(String name) {
+        this.firstName = name;
         return this;
     }
 
     public String getLastname() {
-        return lastname;
+        return lastName;
     }
 
     public UserResource setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastName = lastname;
         return this;
     }
 
     public Date getBirth() {
-        return birth;
+        return birthDate;
     }
 
     public UserResource setBirth(Date birth) {
-        this.birth = birth;
+        this.birthDate = birth;
         return this;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public UserResource setAddress(String address) {
-        this.address = address;
-        return this;
-    }
 
     public Long getPhone() {
         return phone;
@@ -69,15 +58,6 @@ public class UserResource extends AuditModel {
 
     public UserResource setPhone(Long phone) {
         this.phone = phone;
-        return this;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public UserResource setAge(int age) {
-        this.age = age;
         return this;
     }
 
@@ -108,12 +88,4 @@ public class UserResource extends AuditModel {
         return this;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public UserResource setCountry(String country) {
-        this.country = country;
-        return this;
-    }
 }

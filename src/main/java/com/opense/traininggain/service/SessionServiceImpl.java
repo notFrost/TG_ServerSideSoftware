@@ -63,9 +63,7 @@ public class SessionServiceImpl implements SessionService {
         return sessionRepository.findById(sessionId).map(session -> {
             session.setTitle(sessionDetails.getTitle());
             session.setDescription(sessionDetails.getDescription());
-            session.setStartDate(sessionDetails.getStartDate());
-            session.setStartHour(sessionDetails.getStartHour());
-            session.setEndHour(sessionDetails.getEndHour());
+            session.setDate(sessionDetails.getDate());
             return sessionRepository.save(session);
         }).orElseThrow(()->new ResourceNotFoundException("Session","Id",sessionId));
     }
