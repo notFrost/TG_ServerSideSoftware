@@ -9,29 +9,16 @@ public class SaveUserResource  {
     @NotNull
     @NotBlank
     @Size(max = 15)
-    private String name;
+    private String firstName;
 
     @NotNull
     @NotBlank
     @Size(max = 15)
-    private String lastname;
+    private String lastName;
 
-    @NotNull
-    @NotBlank
-    private Date birth;
+    private Date birthDate;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 50)
-    private String address;
-
-    @NotNull
-    @NotBlank
     private Long phone;
-
-    @NotNull
-    @NotBlank
-    private int age;
 
     @NotNull
     @NotBlank
@@ -40,53 +27,34 @@ public class SaveUserResource  {
 
     @NotNull
     @NotBlank
-    @Size(max = 20)
-    private String gender;
-
-    @NotNull
-    @NotBlank
     @Size(max = 8)
     private String password;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 25)
-    private String country;
 
-
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public SaveUserResource setName(String name) {
-        this.name = name;
+    public SaveUserResource setFirstName(String firstName) {
+        this.firstName = firstName;
         return this;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public SaveUserResource setLastname(String lastname) {
-        this.lastname = lastname;
+    public SaveUserResource setLastName(String lastName) {
+        this.lastName = lastName;
         return this;
     }
 
-    public Date getBirth() {
-        return birth;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public SaveUserResource setBirth(Date birth) {
-        this.birth = birth;
-        return this;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public SaveUserResource setAddress(String address) {
-        this.address = address;
+    public SaveUserResource setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
         return this;
     }
 
@@ -99,30 +67,12 @@ public class SaveUserResource  {
         return this;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public SaveUserResource setAge(int age) {
-        this.age = age;
-        return this;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public SaveUserResource setEmail(String email) {
         this.email = email;
-        return this;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public SaveUserResource setGender(String gender) {
-        this.gender = gender;
         return this;
     }
 
@@ -134,15 +84,4 @@ public class SaveUserResource  {
         this.password = password;
         return this;
     }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public SaveUserResource setCountry(String country) {
-        this.country = country;
-        return this;
-    }
-
-
 }

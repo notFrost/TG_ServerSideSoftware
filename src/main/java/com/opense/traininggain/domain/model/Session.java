@@ -1,11 +1,8 @@
 package com.opense.traininggain.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -29,19 +26,8 @@ public class Session extends AuditModel {
 
     @NotNull
     @Size(max = 50)
-    @Column(name = "start_date")
-    private Date startDate;
+    private Date date;
 
-
-    @NotNull
-    @Size(max = 5)
-    @Column(name = "start_hour")
-    private Date startHour;
-
-    @NotNull
-    @Size(max = 5)
-    @Column(name = "end_hour")
-    private Date endHour;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "specialist_id",nullable = false)
@@ -63,7 +49,11 @@ public class Session extends AuditModel {
             inverseJoinColumns = { @JoinColumn(name = "tag_id")})
     private List<Tag> tags;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},mappedBy="sessions")
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "customer_session",
+            joinColumns = { @JoinColumn(name = "session_id")},
+            inverseJoinColumns = { @JoinColumn(name = "customer_id")})
     private List<Customer> customers;
 
     public Long getId() {
@@ -84,15 +74,14 @@ public class Session extends AuditModel {
         return this;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Date getDate() {
+        return date;
     }
 
-    public Session setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public Session setDate(Date startDate) {
+        this.date = startDate;
         return this;
     }
-
 
     public Specialist getSpecialist() {
         return specialist;
@@ -111,24 +100,6 @@ public class Session extends AuditModel {
         return this;
     }
 
-    public Date getStartHour() {
-        return startHour;
-    }
-
-    public Session setStartHour(Date startHour) {
-        this.startHour = startHour;
-        return this;
-    }
-
-    public Date getEndHour() {
-        return endHour;
-    }
-
-    public Session setEndHour(Date endHour) {
-        this.endHour = endHour;
-        return this;
-    }
-
     public List<Customer> getCustomers() {
         return customers;
     }
@@ -137,7 +108,6 @@ public class Session extends AuditModel {
         this.customers = customers;
         return this;
     }
-
 
     public List<Equipament> getEquipaments() {
         return equipaments;
@@ -155,7 +125,6 @@ public class Session extends AuditModel {
         this.tags = tags;
         return this;
     }
-
 
     public boolean EquipamentWith(Equipament equipament) {
         return this.getEquipaments().contains(equipament);
@@ -182,5 +151,4 @@ public class Session extends AuditModel {
             this.getTags().add(tag);
         return this;
     }
-
 }

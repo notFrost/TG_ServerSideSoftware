@@ -15,40 +15,26 @@ public class User extends AuditModel {
 
     @NotNull
     @Size(max = 15)
-    private String name;
+    private String firstName;
 
     @NotNull
     @Size(max = 15)
-    private String lastname;
+    private String lastName;
 
-    @NotNull
-    private Date birth;
+    private Date birthDate;
 
-    @NotNull
-    @Size(max=50)
-    private String address;
-
-    @NotNull
     private Long phone;
-
-    @NotNull
-    private int age;
 
     @NotNull
     @Size(max = 50)
     private String email;
 
-    @NotNull
     @Size(max = 20)
     private String gender;
 
     @NotNull
     @Size(max = 8)
     private String password;
-
-    @NotNull
-    @Size(max = 25)
-    private String country;
 
 
 
@@ -60,36 +46,28 @@ public class User extends AuditModel {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String name) {
+        this.firstName = name;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastname) {
+        this.lastName = lastname;
     }
 
-    public Date getBirth() {
-        return birth;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setBirthDate(Date birth) {
+        this.birthDate = birth;
     }
 
     public Long getPhone() {
@@ -98,14 +76,6 @@ public class User extends AuditModel {
 
     public void setPhone(Long phone) {
         this.phone = phone;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public String getEmail() {
@@ -131,13 +101,4 @@ public class User extends AuditModel {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
 }

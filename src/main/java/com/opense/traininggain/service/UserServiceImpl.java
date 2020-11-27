@@ -1,7 +1,6 @@
 package com.opense.traininggain.service;
 
 
-import com.opense.traininggain.domain.model.Specialist;
 import com.opense.traininggain.domain.model.User;
 import com.opense.traininggain.domain.repository.UserRepository;
 import com.opense.traininggain.domain.service.UserService;
@@ -36,16 +35,13 @@ public class UserServiceImpl implements UserService {
     public User updateUser(Long userId, User userDetails) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
-        user.setName(userDetails.getName());
-        user.setLastname(userDetails.getLastname());
-        user.setBirth(userDetails.getBirth());
-        user.setAddress(userDetails.getAddress());
+        user.setFirstName(userDetails.getFirstName());
+        user.setLastName(userDetails.getLastName());
+        user.setBirthDate(userDetails.getBirthDate());
         user.setPhone(userDetails.getPhone());
-        user.setAge(userDetails.getAge());
         user.setEmail(userDetails.getEmail());
         user.setGender(userDetails.getGender());
         user.setPassword(userDetails.getPassword());
-        user.setCountry(userDetails.getCountry());
 
         return userRepository.save(user);
     }

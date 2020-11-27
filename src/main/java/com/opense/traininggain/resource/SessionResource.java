@@ -1,27 +1,15 @@
 package com.opense.traininggain.resource;
 
 import com.opense.traininggain.domain.model.AuditModel;
-import com.opense.traininggain.domain.model.Session;
-import com.opense.traininggain.domain.model.User;
 
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class SessionResource extends AuditModel {
     private Long id;
     private String title;
-    private Date startDate;
+    private Date date;
     private String description;
-
-
-
-    private String name;
-
-    private Date startHour;
-    private Date endHour;
 
 
     public String getDescription() {
@@ -52,32 +40,12 @@ public class SessionResource extends AuditModel {
         return this;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Date getDate() {
+        return date;
     }
 
-    public SessionResource setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public SessionResource setDate(Date date) {
+        this.date = date;
         return this;
     }
-    public Date getStartHour() {
-        return startHour;
-    }
-
-    public SessionResource setStartHour(Date startHour) {
-        this.startHour = startHour;
-        return this;
-    }
-
-    public Date getEndHour() {
-        return endHour;
-    }
-
-    public SessionResource setEndHour(Date endHour) {
-        this.endHour = endHour;
-        return this;
-    }
-
-
-
 }
