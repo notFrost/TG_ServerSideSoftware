@@ -49,7 +49,11 @@ public class Session extends AuditModel {
             inverseJoinColumns = { @JoinColumn(name = "tag_id")})
     private List<Tag> tags;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},mappedBy="sessions")
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "customer_session",
+            joinColumns = { @JoinColumn(name = "session_id")},
+            inverseJoinColumns = { @JoinColumn(name = "customer_id")})
     private List<Customer> customers;
 
     public Long getId() {
