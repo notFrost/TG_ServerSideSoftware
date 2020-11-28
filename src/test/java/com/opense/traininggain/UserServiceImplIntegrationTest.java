@@ -38,10 +38,6 @@ public class UserServiceImplIntegrationTest {
         public UserService userService() {
             return new UserServiceImpl();
         }
-
-
-
-
     }
 @Test
 @DisplayName("when GetUserById With Valid Id Then Returns User")
