@@ -54,7 +54,7 @@ import static org.mockito.Mockito.when;
         }
         @Test
         @DisplayName("when GetSpecialistById With Valid Id Then Returns Specialist")
-        public void whenGetSpecislistByIdWithValidIdThenReturnsUser() {
+        public void whenGetSpecislistByIdWithValidIdThenReturnsSpecialist() {
 
             //Arrange
             long id =1;
